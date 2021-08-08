@@ -18,8 +18,22 @@ import (
  *  2. INTEGER d
  */
 
+func max(array []int32, limit int32) int32 {
+	max := int32(0)
+	for _, a := range array {
+		if a > max {
+			max = a
+		}
+	}
+	if max > limit {
+		max = limit
+	}
+	return max
+}
+
 func activityNotifications(expenditure []int32, d int32) int32 {
-	counting_array := make([]int, 201)
+	maxLength := max(expenditure, 200) + 1
+	counting_array := make([]int, maxLength)
 	for i := 0; int32(i) < d; i++ {
 		counting_array[expenditure[i]]++
 	}
@@ -67,10 +81,7 @@ func findMedian(counting_array []int, d int32) float64 {
 }
 
 func main() {
-	file, err := os.Open("input/input.txt")
-	checkError(err)
-
-	reader := bufio.NewReaderSize(file, 16*1024*1024)
+	reader := bufio.NewReaderSize(os.Stdin, 16*1024*1024)
 	writer := bufio.NewWriterSize(os.Stdout, 16*1024*1024)
 
 	firstMultipleInput := strings.Split(strings.TrimSpace(readLine(reader)), " ")
